@@ -1,0 +1,26 @@
+<div class="modal-my-content">
+  <div class="modal-my-header">
+    <h5>{{ title }}</h5>
+  </div>
+  <div class="modal-my-body">
+    <ng-content></ng-content>
+  </div>
+  <div class="modal-my-footer">
+    <button
+      type="button"
+      class="btn btn-primary"
+      data-dismiss="modal"
+      (click)="no.emit()"
+    >
+      Não
+    </button>
+    <button
+      data-dismiss="modal"
+      type="button"
+      class="btn btn-danger"
+      (click)="yes.emit()"
+    >
+      Sim
+    </button>
+  </div>
+</div>

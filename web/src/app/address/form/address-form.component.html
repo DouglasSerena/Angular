@@ -1,0 +1,229 @@
+<form class="form-row" [formGroup]="formAddress">
+  <!-- STREET -->
+  <app-input class="col-md-4" label="Logradouro" name="logradouro">
+    <input
+      type="text"
+      class="form-control"
+      formControlName="logradouro"
+      [class.is-invalid]="
+        this.formAddress.controls.logradouro.invalid &&
+        this.formAddress.controls.logradouro.touched
+      "
+      [class.is-valid]="
+        this.formAddress.controls.logradouro.valid &&
+        this.formAddress.controls.logradouro.touched
+      "
+    />
+    <div
+      class="m-0"
+      *ngIf="formAddress.controls.logradouro.errors?.required"
+      class="invalid-feedback"
+    >
+      Preencha este campo
+    </div>
+  </app-input>
+
+  <!-- NUMBER -->
+  <app-input class="col-md-3" label="Número" name="numero">
+    <input
+      type="text"
+      class="form-control"
+      formControlName="numero"
+      [class.is-invalid]="
+        this.formAddress.controls.numero.invalid &&
+        this.formAddress.controls.numero.touched
+      "
+      [class.is-valid]="
+        this.formAddress.controls.numero.valid &&
+        this.formAddress.controls.numero.touched
+      "
+    />
+    <div
+      class="m-0"
+      *ngIf="formAddress.controls.numero.errors?.required"
+      class="invalid-feedback"
+    >
+      Preencha este campo
+    </div>
+  </app-input>
+
+  <!-- ZONA -->
+  <app-input class="col-md-5" label="Bairro" name="bairro">
+    <input
+      type="text"
+      class="form-control"
+      formControlName="bairro"
+      [class.is-invalid]="
+        this.formAddress.controls.bairro.invalid &&
+        this.formAddress.controls.bairro.touched
+      "
+      [class.is-valid]="
+        this.formAddress.controls.bairro.valid &&
+        this.formAddress.controls.bairro.touched
+      "
+    />
+    <div
+      class="m-0"
+      *ngIf="formAddress.controls.bairro.errors?.required"
+      class="invalid-feedback"
+    >
+      Preencha este campo
+    </div>
+  </app-input>
+
+  <!-- ZIP -->
+  <app-input class="col-md-3" label="Cep" name="cep">
+    <input
+      type="text"
+      class="form-control"
+      formControlName="cep"
+      mask="99999-999"
+      placeholder="_____-___"
+      (input)="handleZipDatas()"
+      [class.is-invalid]="
+        this.formAddress.controls.cep.invalid &&
+        this.formAddress.controls.cep.touched
+      "
+      [class.is-valid]="
+        this.formAddress.controls.cep.valid &&
+        this.formAddress.controls.cep.touched
+      "
+    />
+    <div
+      class="m-0"
+      *ngIf="formAddress.controls.cep.errors?.required"
+      class="invalid-feedback"
+    >
+      Preencha este campo
+    </div>
+    <div
+      class="m-0"
+      *ngIf="formAddress.controls.cep.errors?.zipInvalid"
+      class="invalid-feedback"
+    >
+      Cep invalido.
+    </div>
+  </app-input>
+
+  <!-- STATE -->
+  <app-input class="col-md-4" label="Estado" name="estado">
+    <select
+      formControlName="estado"
+      id="estado"
+      value=""
+      class="custom-select"
+      [class.is-invalid]="
+        this.formAddress.controls.estado.invalid &&
+        this.formAddress.controls.estado.touched
+      "
+      [class.is-valid]="
+        this.formAddress.controls.estado.valid &&
+        this.formAddress.controls.estado.touched
+      "
+    >
+      <option value="" hidden selected>Selecione um estado</option>
+      <option *ngFor="let state of states | async" [value]="state.sigla">
+        {{ state.nome }}
+      </option>
+    </select>
+    <div
+      class="m-0"
+      *ngIf="formAddress.controls.estado.errors?.required"
+      class="invalid-feedback"
+    >
+      Preencha este campo
+    </div>
+  </app-input>
+
+  <!-- CITY -->
+  <app-input class="col-md-5" label="Cidade" name="cidade">
+    <input
+      type="text"
+      class="form-control"
+      formControlName="cidade"
+      [class.is-invalid]="
+        this.formAddress.controls.cidade.invalid &&
+        this.formAddress.controls.cidade.touched
+      "
+      [class.is-valid]="
+        this.formAddress.controls.cidade.valid &&
+        this.formAddress.controls.cidade.touched
+      "
+    />
+    <div
+      class="m-0"
+      *ngIf="formAddress.controls.cidade.errors?.required"
+      class="invalid-feedback"
+    >
+      Preencha este campo
+    </div>
+  </app-input>
+
+  <!-- COMMENT -->
+  <app-input label="complemento" name="cidade" class="col-12">
+    <textarea
+      class="form-control"
+      formControlName="complemento"
+      id="complemento"
+    ></textarea>
+  </app-input>
+
+  <!-- BUTTONS -->
+  <div *ngIf="!addressId; else buttonsUpdate" class="col-12">
+    <!-- REGISTER -->
+    <button
+      class="btn btn-primary mt-2 w-100"
+      [disabled]="formAddress.invalid"
+      (click)="store()"
+    >
+      Cadastrar
+    </button>
+  </div>
+  <ng-template #buttonsUpdate>
+    <!-- UPDATE -->
+    <div class="d-flex w-100">
+      <!-- SAVE -->
+      <button
+        class="btn btn-success mt-2 w-100"
+        [disabled]="formAddress.invalid"
+        (click)="updateAddress()"
+      >
+        save
+      </button>
+      <!-- REMOVE -->
+      <button
+        class="btn btn-danger mt-2 ml-2 d-flex align-items-center"
+        (click)="modal = true"
+      >
+        remover<i class="fa fa-trash ml-2"></i>
+      </button>
+      <!-- BACK REGISTER -->
+      <button
+        class="btn btn-primary mt-2 ml-2 d-flex align-items-center"
+        (click)="add.emit(); handleReset()"
+      >
+        Novo <i class="fa fa-plus ml-2"></i>
+      </button>
+    </div>
+  </ng-template>
+  <p
+    class="m-0"
+    *ngIf="messageError"
+    class="text-center text-danger m-0 p-0 col-12 font-weight-bold"
+  >
+    {{ messageError }}
+  </p>
+</form>
+
+<!-- LOAD -->
+<app-loading *ngIf="loading"></app-loading>
+
+<!-- MODAL -->
+<app-modal
+  *ngIf="modal"
+  title="Remover endereço"
+  (no)="modal = false"
+  (yes)="modal = false; deleteAddress()"
+>
+  <p class="m-0">Tem certeza que deseja remover este endereço</p>
+</app-modal>

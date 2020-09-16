@@ -1,0 +1,40 @@
+.loading {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+
+  background-color: #33333333;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 1;
+
+  animation: start 250ms ease;
+
+  z-index: 1000000;
+  i {
+    display: flex;
+    font-size: 70px;
+    animation: move 1s infinite;
+  }
+}
+@keyframes start {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes move {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}

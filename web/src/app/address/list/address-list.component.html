@@ -1,0 +1,37 @@
+<div class="address-table">
+  <table>
+    <thead>
+      <tr>
+        <th>Logradouro</th>
+        <th>Número</th>
+        <th>Bairro</th>
+        <th>Cidade</th>
+        <th>Estado</th>
+        <th>Complemento</th>
+      </tr>
+    </thead>
+    <tbody *ngIf="addresses.length; else empty">
+      <tr
+        *ngFor="let address of addresses"
+        (click)="this.addressId.emit(address.id)"
+      >
+        <td>{{ address.logradouro ? address.logradouro : "-" }}</td>
+        <td>{{ address.numero ? address.numero : "-" }}</td>
+        <td>{{ address.bairro ? address.bairro : "-" }}</td>
+        <td>{{ address.cidade ? address.cidade : "-" }}</td>
+        <td>{{ address.estado ? address.estado : "-" }}</td>
+        <td>{{ address.complemento ? address.complemento : "-" }}</td>
+      </tr>
+    </tbody>
+    <ng-template #empty>
+      <tr>
+        <td>-</td>
+        <td>-</td>
+        <td>-</td>
+        <td>-</td>
+        <td>-</td>
+        <td>-</td>
+      </tr>
+    </ng-template>
+  </table>
+</div>

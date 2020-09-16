@@ -1,0 +1,38 @@
+<table>
+  <thead>
+    <tr>
+      <th>Nome</th>
+      <th>E-mail</th>
+      <th>Fone</th>
+      <th>Nascimento</th>
+      <th>Endereços</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr
+      *ngFor="let client of clients | async"
+      (click)="handleAddresses(client.id)"
+    >
+      <td>{{ client.nome }}</td>
+      <td>{{ client.email }}</td>
+      <td>{{ client.fone }}</td>
+      <td>{{ client.dataNascimento || "--/--/----" }}</td>
+      <td>
+        <button
+          type="button"
+          class="btn rounded-circle"
+          (click)="handleAddresses(client.id)"
+        >
+          <i class="fa fa-map pointer-event"></i>
+        </button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<div *ngIf="clienteId">
+  <app-address
+    [clienteId]="clienteId"
+    (close)="handleCloseAddress()"
+  ></app-address>
+</div>
